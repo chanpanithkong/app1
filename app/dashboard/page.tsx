@@ -27,6 +27,7 @@ import {
 import { StatCard } from "@/components/dashboard/stat-card"
 import { StudentOverview } from "@/components/dashboard/student-overview"
 import { AttendanceChart } from "@/components/dashboard/attendance-chart"
+import { UserNav } from "@/components/nav-user"
 
 export default function Page() {
   return (
@@ -58,6 +59,10 @@ export default function Page() {
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
+
+          <div className="ml-auto">
+            <UserNav />
+          </div>
         </header>
 
         {/* Dashboard Content */}
