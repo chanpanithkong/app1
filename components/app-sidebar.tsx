@@ -1,13 +1,10 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 import { SearchForm } from "@/components/search-form"
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible"
 import {
   Sidebar,
   SidebarContent,
@@ -16,15 +13,26 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import { GalleryVerticalEndIcon, PlusIcon, MinusIcon } from "lucide-react"
-import { sidebarData } from "@/data/sidebar-data"
+import { GalleryVerticalEndIcon } from "lucide-react"
+
+interface SidebarItem {
+  title: string
+  url: string
+}
+
+const sidebarItems: SidebarItem[] = [
+  { title: "Dashboard", url: "/" },
+  { title: "Students", url: "/students" },
+  { title: "Register Student", url: "/students/register" },
+  { title: "Teachers", url: "/teachers" },
+  { title: "Add Teacher", url: "/teachers/add" },
+]
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const pathname = usePathname()
+
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -46,36 +54,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu>
-            {sidebarData.navMain.map((item, index) => (
-              <Collapsible
-                key={item.title}
-                defaultOpen={index === 1}
-                className="group/collapsible"
-              >
-                <SidebarMenuItem>
-                  <SidebarMenuButton render={<CollapsibleTrigger />}>
-                    {item.title}{" "}
-                    <PlusIcon className="ml-auto group-aria-expanded/menu-button:hidden" />
-                    <MinusIcon className="ml-auto hidden group-aria-expanded/menu-button:block" />
-                  </SidebarMenuButton>
-                  {item.items?.length ? (
-                    <CollapsibleContent>
-                      <SidebarMenuSub>
-                        {item.items.map((item) => (
-                          <SidebarMenuSubItem key={item.title}>
-                            <SidebarMenuSubButton
-                              isActive={item.isActive}
-                              render={<a href={item.url} />}
-                            >
-                              {item.title}
-                            </SidebarMenuSubButton>
-                          </SidebarMenuSubItem>
-                        ))}
-                      </SidebarMenuSub>
-                    </CollapsibleContent>
-                  ) : null}
-                </SidebarMenuItem>
-              </Collapsible>
+            {sidebarItems.map((item) => (
+              <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton
+                  isActive={pathname === item.url}
+                  render={<Link href={item.url} />}
+                >
+                  {item.title}
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             ))}
           </SidebarMenu>
         </SidebarGroup>

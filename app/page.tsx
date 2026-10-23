@@ -1,23 +1,45 @@
-// import { Button } from "@/components/ui/button"
+import { Users, GraduationCap, BookOpen, CalendarCheck } from "lucide-react"
 
-// export default function Page() {
-//   return (
-//     <div className="flex min-h-svh p-6">
-//       <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-//         <div>
-//           <h1 className="font-medium">Project ready!</h1>
-//           <p>You may now add components and start building.</p>
-//           <p>We&apos;ve already added the button component for you.</p>
-//           <Button className="mt-2">Button</Button>
-//         </div>
-//         <div className="font-mono text-xs text-muted-foreground">
-//           (Press <kbd>d</kbd> to toggle dark mode)
-//         </div>
-//       </div>
-//     </div>
-//   )
-// }
+import { SchoolLayout } from "@/components/school-layout"
+import { StatCard } from "@/components/dashboard/stat-card"
+import { StudentOverview } from "@/components/dashboard/student-overview"
+import { AttendanceChart } from "@/components/dashboard/attendance-chart"
 
-import { redirect } from "next/navigation"
-
-export default function HomePage() { redirect("/dashboard") }
+export default function DashboardPage() {
+  return (
+    <SchoolLayout>
+      <main className="flex flex-1 flex-col gap-4 p-4">
+        <div className="grid auto-rows-min gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <StatCard
+            title="Total Students"
+            value="1,250"
+            description="Currently enrolled"
+            icon={Users}
+          />
+          <StatCard
+            title="Total Teachers"
+            value="85"
+            description="Active teaching staff"
+            icon={GraduationCap}
+          />
+          <StatCard
+            title="Total Courses"
+            value="42"
+            description="Available courses"
+            icon={BookOpen}
+          />
+          <StatCard
+            title="Attendance Rate"
+            value="96.5%"
+            description="Today's attendance"
+            icon={CalendarCheck}
+          />
+        </div>
+        <div className="grid gap-4 md:grid-cols-2">
+          <StudentOverview />
+          <AttendanceChart />
+        </div>
+      </main>
+    </SchoolLayout>
+  )
+}
